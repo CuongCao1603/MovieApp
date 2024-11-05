@@ -49,7 +49,16 @@ export const MovieDetail = () => {
   return (
     <div>
       <Banner mediaInfo={movieInfo} />
-      <ActorList />
+      <div className="bg-black text-white">
+        <div className="mx-auto flex max-w-screen-xl gap-6 px-6 py-10">
+          <div className="flex-[2]">
+            <ActorList />
+          </div>
+          <div className="flex-1">
+            <p className="mb-4 text-[1.4vw] font-bold">Information</p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

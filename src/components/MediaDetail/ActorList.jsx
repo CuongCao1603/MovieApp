@@ -1,16 +1,14 @@
+import ActorInfo from "./ActorInfo";
+
 const ActorList = () => {
   return (
     <div>
-      <p>Actor</p>
-      <div>
-        <img
-          src="	https://media.themoviedb.org/t/p/w276_and_h350_face/u38k3hQBDwNX0VA22aQceDp9Iyv.jpg"
-          alt=""
-        />
-        <div>
-          <p>Joaquin Phoenix</p>
-          <p>Arthur Fleck</p>
-        </div>
+      <p className="mb-4 text-[1.4vw] font-bold">Actor</p>
+      <div className="grid-flow-cols-3 grid gap-4 sm:grid-cols-4">
+        <ActorInfo />
+        <ActorInfo />
+        <ActorInfo />
+        <ActorInfo />
       </div>
     </div>
   );
