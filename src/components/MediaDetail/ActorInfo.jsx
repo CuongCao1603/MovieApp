@@ -1,14 +1,18 @@
-const ActorInfo = () => {
+const ActorInfo = ({ id, name, character, profilePath }) => {
   return (
     <div className="rounded-lg border border-slate-300 bg-black shadow-sm">
       <img
-        className="object-cover"
-        src="	https://media.themoviedb.org/t/p/w276_and_h350_face/u38k3hQBDwNX0VA22aQceDp9Iyv.jpg"
+        className="rounded-lg object-cover"
+        src={
+          profilePath
+            ? `https://media.themoviedb.org/t/p/w276_and_h350_face${profilePath}`
+            : "/ActorNoImage.svg"
+        }
         alt=""
       />
       <div>
-        <p className="font-bold">Joaquin Phoenix</p>
-        <p>Arthur Fleck</p>
+        <p className="font-bold">{name}</p>
+        <p>{character}</p>
       </div>
     </div>
   );
