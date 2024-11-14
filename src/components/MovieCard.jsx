@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import CircularProgressBar from "../CircularProgressBar";
+import CircularProgressBar from "./CircularProgressBar";
 
 export const MovieCard = ({
   title,
@@ -10,8 +10,8 @@ export const MovieCard = ({
   id,
 }) => {
   return (
-    <Link to={`/movie/${id}`}>
-      <div className="relative rounded-lg border border-slate-800">
+    <Link to={`/movie/${id}`} className="rounded-lg border border-slate-800">
+      <div className="relative">
         {mediaType === "tv" && (
           <p className="absolute right-1 top-1 rounded bg-black p-1 font-bold text-white shadow-md">
             TV Show

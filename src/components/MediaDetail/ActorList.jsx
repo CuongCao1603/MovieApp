@@ -4,7 +4,7 @@ const ActorList = ({ actors = [] }) => {
   return (
     <div>
       <p className="mb-4 text-[1.4vw] font-bold">Actor</p>
-      <div className="grid-flow-cols-3 grid gap-4 sm:grid-cols-4">
+      <div className="grid gap-4 grid-flow-cols-3 sm:grid-cols-4 sm:gap-6">
         {actors.map((actor) => (
           <ActorInfo
             key={actor.id}

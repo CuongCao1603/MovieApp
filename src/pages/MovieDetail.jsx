@@ -4,40 +4,45 @@ import Loading from "@components/Loading";
 import Banner from "@components/MediaDetail/Banner";
 import ActorList from "@components/MediaDetail/ActorList";
 import RelatedMediaList from "@components/MediaDetail/RelatedMediaList";
+import MovieInformation from "@components/MediaDetail/MovieInformation";
+import useFetch from "@hooks/useFetch";
 
 export const MovieDetail = () => {
   const { id } = useParams(); // get dynamic value passed in via url at dom
-  const [movieInfo, setMovieInfo] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
+  const [relatedMovies, setRelatedMovies] = useState([]);
 
-  // console.log(id);
+  const { data: movieInfo, isLoading } = useFetch({
+    url: `/movie/${id}?append_to_response=release_dates,credits`,
+  });
 
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        setIsLoading(true);
+        // setIsRelatedMediaListLoading(true);
         const res = await fetch(
-          `https://api.themoviedb.org/3/movie/${id}?append_to_response=release_dates,credits`,
+          `https://api.themoviedb.org/3/movie/${id}/recommendations`,
           {
             method: "GET",
             headers: {
               accept: "application/json",
-              Authorization:
-                "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3YWMwYmNkZDA4YjZmODkyYWVmNzQyOGQxZDkwMDEwNyIsIm5iZiI6MTczMDEwNjg2Mi4zMzc0NDcsInN1YiI6IjY3MWY1NGNiNDI3YzVjMTlmMDI2NmQ5YSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KB3-8QPnrNBjAhgpYsIzY8R3IhltkyXq9MC4UDtnj9U",
+              Authorization: `Bearer ${import.meta.env.VITE_API_TOKEN}`,
             },
           },
         );
 
         if (res.ok) {
           const data = await res.json();
-          setMovieInfo(data);
+          console.log({ recommandation: data });
+          const currentRelatedMovies = (data.results || []).slice(0, 12);
+          setRelatedMovies(currentRelatedMovies);
+          // setMovieInfo(data);
         } else {
-          console.error("Failed to fetch movies");
+          console.error("Failed to fetch relate movies");
         }
       } catch (error) {
         console.error("An error occurred:", error);
       } finally {
-        setIsLoading(false);
+        // setIsRelatedMediaListLoading(false);
       }
     };
 
@@ -48,18 +53,22 @@ export const MovieDetail = () => {
     return <Loading />;
   }
 
+  // if (isRelatedMediaListLoading) {
+  //   return <Loading />;
+  // }
+
   console.log("actors ", { movieInfo });
   return (
     <div>
       <Banner mediaInfo={movieInfo} />
-      <div className="bg-black text-white">
-        <div className="mx-auto flex max-w-screen-xl gap-6 px-6 py-10">
+      <div className="text-white bg-black">
+        <div className="flex max-w-screen-xl gap-6 px-6 py-10 mx-auto">
           <div className="flex-[2]">
-            <ActorList actors={movieInfo.credits?.cast || []} />
-            <RelatedMediaList />
+            <ActorList actors={movieInfo.credits?.cast?.slice(0, 4) || []} />
+            <RelatedMediaList mediaList={relatedMovies} />
           </div>
           <div className="flex-1">
-            <p className="mb-4 text-[1.4vw] font-bold">Information</p>
+            <MovieInformation movieInfo={movieInfo} />
           </div>
         </div>
       </div>

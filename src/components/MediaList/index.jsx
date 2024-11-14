@@ -1,5 +1,6 @@
+import { MovieCard } from "@components/MovieCard";
 import { useEffect, useState } from "react";
-import { MovieCard } from "./MovieCard";
+
 
 const MediaList = ({ title, tabs }) => {
   const [mediaList, setMediaList] = useState([]);
@@ -37,9 +38,9 @@ const MediaList = ({ title, tabs }) => {
 
   return (
     <div className="bg-black px-8 py-10 text-[1.2vw] text-white">
-      <div className="mb-6 flex items-center gap-4">
+      <div className="flex items-center gap-4 mb-6">
         <p className="text-[2vw] font-bold">{title}</p>
-        <ul className="flex rounded border border-white">
+        <ul className="flex border border-white rounded">
           {tabs.map((tab) => (
             <li
               key={tab.id}
