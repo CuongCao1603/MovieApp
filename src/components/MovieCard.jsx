@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import CircularProgressBar from "./CircularProgressBar";
+import ImageComponent from "./Image";
 
 export const MovieCard = ({
   title,
@@ -10,17 +11,21 @@ export const MovieCard = ({
   id,
 }) => {
   return (
-    <Link to={`/movie/${id}`} className="rounded-lg border border-slate-800">
+    <Link
+      to={mediaType === "tv" ? `/tv/${id}` : `/movie/${id}`}
+      className="rounded-lg border border-slate-800"
+    >
       <div className="relative">
         {mediaType === "tv" && (
           <p className="absolute right-1 top-1 rounded bg-black p-1 font-bold text-white shadow-md">
             TV Show
           </p>
         )}
-        <img
-          className="rounded-lg"
+        <ImageComponent
           src={`https://image.tmdb.org/t/p/w500${poster}`}
-          alt=""
+          width={210}
+          height={300}
+          className="w-full rounded-lg"
         />
         <div className="relative -top-[1.5vw] px-4">
           <CircularProgressBar

@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import HomePage from "./pages/HomePage.jsx";
 import { MovieDetail } from "./pages/MovieDetail.jsx";
 import RootLayout from "./pages/RootLayout.jsx";
+import TVShowDetail from "@pages/TVShowDetail";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
       {
         path: "/movie/:id", // passing dynamic id value on url
         element: <MovieDetail />,
+      },
+      {
+        path: "/tv/:id",
+        element: <TVShowDetail />,
       },
     ],
   },

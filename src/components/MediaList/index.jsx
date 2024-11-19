@@ -1,41 +1,16 @@
 import { MovieCard } from "@components/MovieCard";
-import { useEffect, useState } from "react";
-
+import useFetch from "@hooks/useFetch";
+import { useState } from "react";
 
 const MediaList = ({ title, tabs }) => {
-  const [mediaList, setMediaList] = useState([]);
   const [activeTabId, setActiveTabId] = useState(tabs[0]?.id);
 
-  useEffect(() => {
-    const url = tabs.find((tab) => tab.id === activeTabId)?.url;
-    const fetchMovies = async () => {
-      if (!url) return;
-      try {
-        const res = await fetch(url, {
-          method: "GET",
-          headers: {
-            accept: "application/json",
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3YWMwYmNkZDA4YjZmODkyYWVmNzQyOGQxZDkwMDEwNyIsIm5iZiI6MTczMDEwNjg2Mi4zMzc0NDcsInN1YiI6IjY3MWY1NGNiNDI3YzVjMTlmMDI2NmQ5YSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KB3-8QPnrNBjAhgpYsIzY8R3IhltkyXq9MC4UDtnj9U",
-          },
-        });
+  const url = tabs.find((tab) => tab.id === activeTabId)?.url;
 
-        if (res.ok) {
-          const data = await res.json();
-          console.log({ data });
-          const trendingMediaList = data.results.slice(0, 12);
-          setMediaList(trendingMediaList);
-        } else {
-          console.error("Failed to fetch movies");
-        }
-      } catch (error) {
-        console.error("An error occurred:", error);
-      }
-    };
+  const { data } = useFetch({ url });
 
-    fetchMovies();
-  }, [activeTabId, tabs]); // Empty dependency array to run once when the component mounts
-
+  const mediaList = (data.results || []).slice(0, 12);
+  
   return (
     <div className="bg-black px-8 py-10 text-[1.2vw] text-white">
       <div className="flex items-center gap-4 mb-6">

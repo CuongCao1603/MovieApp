@@ -12,7 +12,6 @@ const useFetch = ({ url = "", method = "GET", headers = {} }) => {
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        ``;
         setIsLoading(true);
         const res = await fetch(`${import.meta.env.VITE_API_HOST}${url}`, {
           method,
@@ -36,7 +35,7 @@ const useFetch = ({ url = "", method = "GET", headers = {} }) => {
     };
 
     fetchMovies();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url, method, JSON.stringify(headers)]);
 
   return { isLoading, data };
