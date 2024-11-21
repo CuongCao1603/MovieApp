@@ -1,10 +1,10 @@
 import ImageComponent from "@components/Image";
 
-const ActorInfo = ({ id, name, character, profilePath }) => {
+const ActorInfo = ({ id, name, character, profilePath, episodeCount }) => {
   return (
-    <div className="bg-black border rounded-lg shadow-sm border-slate-300">
+    <div className="rounded-lg border border-slate-300 bg-black shadow-sm">
       <ImageComponent
-        className="object-cover rounded-lg"
+        className="rounded-lg object-cover"
         src={
           profilePath
             ? `https://media.themoviedb.org/t/p/w276_and_h350_face${profilePath}`
@@ -16,6 +16,10 @@ const ActorInfo = ({ id, name, character, profilePath }) => {
       <div className="p-4">
         <p className="font-bold">{name}</p>
         <p>{character}</p>
+        <p>
+          {episodeCount}
+          {episodeCount > 1 ? " Episodes" : " Episode"}{" "}
+        </p>
       </div>
     </div>
   );
