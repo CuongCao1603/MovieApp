@@ -15,18 +15,17 @@ const Banner = ({
   point = 0,
   overview,
 }) => {
-
   const groupCrews = groupBy(crews, "job");
   console.log({ crews, groupCrews });
 
   return (
-    <div className="relative overflow-hidden text-white shadow-md shadow-slate-800">
+    <div className="relative overflow-hidden bg-black text-white shadow-md shadow-slate-800">
       <ImageComponent
-        className="absolute inset-0 brightness-[.2]"
+        className="absolute inset-0 aspect-video w-full brightness-[.2]"
         src={`https://image.tmdb.org/t/p/original${backdropPath}`}
         alt=""
       />
-      <div className="relative flex max-w-screen-xl gap-6 px-6 py-10 mx-auto lg:gap-8">
+      <div className="relative mx-auto flex max-w-screen-xl gap-6 px-6 py-10 lg:gap-8">
         <div className="flex-1">
           <ImageComponent
             width={600}
@@ -38,14 +37,14 @@ const Banner = ({
         <div className="flex-[2] text-[1.2vw]">
           <p className="mb-2 text-[2vw] font-bold">{title}</p>
           <div className="flex items-center gap-4">
-            <span className="p-1 text-gray-400 border border-gray-400">
+            <span className="border border-gray-400 p-1 text-gray-400">
               {certification}
             </span>
             <p>{releaseDate}</p>
             <p>{(genres || []).map((genre) => genre.name).join(", ")}</p>
           </div>
 
-          <div className="flex items-center gap-4 mt-4">
+          <div className="mt-4 flex items-center gap-4">
             <div className="flex items-center gap-2">
               <CircularProgressBar
                 percent={Math.round(point * 10)}
@@ -63,7 +62,7 @@ const Banner = ({
             <p className="mb-2 text-[1.3vw] font-bold">Overview</p>
             <p>{overview}</p>
           </div>
-          <div className="grid grid-cols-2 gap-4 mt-4">
+          <div className="mt-4 grid grid-cols-2 gap-4">
             {Object.keys(groupCrews).map((job) => (
               <div key={job}>
                 <p className="font-bold">{job}</p>

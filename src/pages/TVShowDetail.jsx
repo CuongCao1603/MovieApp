@@ -3,8 +3,9 @@ import Loading from "@components/Loading";
 import Banner from "@components/MediaDetail/Banner";
 import ActorList from "@components/MediaDetail/ActorList";
 import RelatedMediaList from "@components/MediaDetail/RelatedMediaList";
-import MovieInformation from "@components/MediaDetail/MovieInformation";
 import useFetch from "@hooks/useFetch";
+import TVShowInformation from "@components/MediaDetail/TVShowInformation";
+import SeasonsList from "@components/MediaDetail/SeasonsList";
 
 const TVShowDetail = () => {
   const { id } = useParams(); // get dynamic value passed in via url at dom
@@ -13,12 +14,12 @@ const TVShowDetail = () => {
     url: `/tv/${id}?append_to_response=content_ratings,aggregate_credits`,
   });
 
-  const { data: recomandationsResponse, isLoading: isRelatedMoviesLoading } =
+  const { data: recomandationsResponse, isLoading: isRecommandationLoading } =
     useFetch({
       url: `/tv/${id}/recommendations`,
     });
 
-  const relatedMovies = recomandationsResponse.results || [];
+  const relatedTVShow = recomandationsResponse.results || [];
 
   const certification =
     (tvInfo.content_ratings?.results || []).find(
@@ -52,21 +53,24 @@ const TVShowDetail = () => {
         point={tvInfo.vote_average}
         overview={tvInfo.overview}
       />
-      <div className="text-white bg-black">
-        <div className="flex max-w-screen-xl gap-6 px-6 py-10 mx-auto">
+      <div className="bg-black text-white">
+        <div className="mx-auto flex max-w-screen-xl gap-6 px-6 py-10">
           <div className="flex-[2]">
-            <ActorList actors={(tvInfo.aggregate_credits?.cast|| []).map((cast) =>({
-              ...cast, 
-              character: cast.roles[0]?.character,
-              episodeCount: cast.roles[0].episode_count
-            }))} />
+            <ActorList
+              actors={(tvInfo.aggregate_credits?.cast || []).map((cast) => ({
+                ...cast,
+                character: cast.roles[0]?.character,
+                episodeCount: cast.roles[0].episode_count,
+              }))}
+            />
+            <SeasonsList seasons={(tvInfo.seasons || []).reverse()} />
             <RelatedMediaList
-              mediaList={relatedMovies}
-              isLoading={isRelatedMoviesLoading}
+              mediaList={relatedTVShow}
+              isLoading={isRecommandationLoading}
             />
           </div>
           <div className="flex-1">
-            <MovieInformation movieInfo={tvInfo} />
+            <TVShowInformation tvInfo={tvInfo} />
           </div>
         </div>
       </div>
